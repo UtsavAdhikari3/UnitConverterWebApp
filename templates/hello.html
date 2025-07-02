@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Unit Converter</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <button onclick="showForm('length')">Length</button>
+    <button onclick="showForm('weight')">Weight</button>
+    <button onclick="showForm('temperature')">Temperature</button>
+  </nav>
+
+  <div class="container">
+    <form id="length" class="converter-form" action="{{url_for('read_form')}}" method="post">
+      <h2>Length Converter</h2>
+      <input type="number" id="lengthValue" placeholder="Enter value" required />
+      <select id="lengthFrom">
+        <option value="m">Meters</option>
+        <option value="km">Kilometers</option>
+        <option value="mi">Miles</option>
+      </select>
+      <select id="lengthTo">
+        <option value="m">Meters</option>
+        <option value="km">Kilometers</option>
+        <option value="mi">Miles</option>
+      </select>
+      <button type="submit">Convert</button>
+      <p id="lengthResult">Result: --</p>
+    </form>
+
+    <form id="weight" class="converter-form" action="{{url_for('read_form')}}" style="display:none" method="post">
+      <h2>Weight Converter</h2>
+      <input type="number" id="weightValue" placeholder="Enter value" required />
+      <select id="weightFrom">
+        <option value="kg">Kilograms</option>
+        <option value="g">Grams</option>
+        <option value="lb">Pounds</option>
+      </select>
+      <select id="weightTo">
+        <option value="kg">Kilograms</option>
+        <option value="g">Grams</option>
+        <option value="lb">Pounds</option>
+      </select>
+      <button type="submit">Convert</button>
+      <p id="weightResult">Result: --</p>
+    </form>
+
+    <form id="temperature" class="converter-form" action="{{url_for('read_form')}}" style="display:none" method="post">
+      <h2>Temperature Converter</h2>
+      <input type="number" id="tempValue" placeholder="Enter value" name="temperature" required />
+      <select id="tempFrom">
+        <option value="c" name="CelsiusFrom">Celsius</option>
+        <option value="f" name="FahrenheitFrom">Fahrenheit</option>
+        <option value="k" name="KelvinFrom">Kelvin</option>
+      </select>
+      <select id="tempTo">
+        <option value="c" name="CelsiusTo">Celsius</option>
+        <option value="f"  name="FahrenheitTo">Fahrenheit</option>
+        <option value="k" name="KelvinTo">Kelvin</option>
+      </select>
+      <button type="submit">Convert</button>
+      <p id="tempResult">Result: --</p>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const initial = localStorage.getItem('selectedConverter') || 'length';
+  showForm(initial);
+});
+
+function showForm(type){
+  ['length','weight','temperature'].forEach(t=>{
+    document.getElementById(t).style.display = (t===type)?'block':'none';
+  });
+  localStorage.setItem('selectedConverter', type);
+}
+
+  </script>
+</body>
+</html>
