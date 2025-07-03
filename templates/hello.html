@@ -16,13 +16,13 @@
   <div class="container">
     <form id="length" class="converter-form" action="{{url_for('read_form')}}" method="post">
       <h2>Length Converter</h2>
-      <input type="number" id="lengthValue" placeholder="Enter value" required />
-      <select id="lengthFrom">
+      <input type="number" id="lengthValue" name="lengthValue" placeholder="Enter value" required />
+      <select id="lengthFrom" name="from">
         <option value="m">Meters</option>
         <option value="km">Kilometers</option>
         <option value="mi">Miles</option>
       </select>
-      <select id="lengthTo">
+      <select id="lengthTo" name="to">
         <option value="m">Meters</option>
         <option value="km">Kilometers</option>
         <option value="mi">Miles</option>
@@ -33,13 +33,13 @@
 
     <form id="weight" class="converter-form" action="{{url_for('read_form')}}" style="display:none" method="post">
       <h2>Weight Converter</h2>
-      <input type="number" id="weightValue" placeholder="Enter value" required />
-      <select id="weightFrom">
+      <input type="number" id="weightValue" name="weightValue" placeholder="Enter value" required />
+      <select id="weightFrom" name="from">
         <option value="kg">Kilograms</option>
         <option value="g">Grams</option>
         <option value="lb">Pounds</option>
       </select>
-      <select id="weightTo">
+      <select id="weightTo" name="to">
         <option value="kg">Kilograms</option>
         <option value="g">Grams</option>
         <option value="lb">Pounds</option>
@@ -50,13 +50,13 @@
 
     <form id="temperature" class="converter-form" action="{{url_for('read_form')}}" style="display:none" method="post">
       <h2>Temperature Converter</h2>
-      <input type="number" id="tempValue" placeholder="Enter value" name="temperature" required />
-      <select id="tempFrom">
+      <input type="number" id="tempValue" name="tempValue" placeholder="Enter value" name="temperature" required />
+      <select id="tempFrom" name="from">
         <option value="c" name="CelsiusFrom">Celsius</option>
         <option value="f" name="FahrenheitFrom">Fahrenheit</option>
         <option value="k" name="KelvinFrom">Kelvin</option>
       </select>
-      <select id="tempTo">
+      <select id="tempTo" name="to">
         <option value="c" name="CelsiusTo">Celsius</option>
         <option value="f"  name="FahrenheitTo">Fahrenheit</option>
         <option value="k" name="KelvinTo">Kelvin</option>

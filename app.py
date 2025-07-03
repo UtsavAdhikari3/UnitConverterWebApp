@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template, request
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -12,5 +13,5 @@ def hello():
 def read_form():
     data = request.form
     print(data)
-    return data
+    return jsonify(data)
 
