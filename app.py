@@ -21,6 +21,9 @@ def read_form():
     
     elif form_id == "weight":
         result = convert_weight(data)
+
+    elif form_id == "temperature":
+        result = convert_temperature(data)
     reply = {
         "formId": form_id,
         "input":  data,
@@ -30,32 +33,81 @@ def read_form():
 
 
 def convert_length(data):
-    if data['fromLength'] == "m" and data["to"] == "km":
-        value = float(data["lengthValue"])/1000
+    from_unit = data["fromLength"]
+    to_unit = data["to"]
+    value = float(data["lengthValue"])
 
-    elif data['fromLength'] == "m" and data["to"] == "mi":
-        value = float(data["lengthValue"])/1609.344
-
-    elif data['fromLength'] == "km" and data["to"] == "m":
-        value = float(data["lengthValue"])*1000
-
-    elif data['fromLength'] == "km" and data["to"] == "mi":
-        value = float(data["lengthValue"])*0.621371
-
-    elif data['fromLength'] == "mi" and data["to"] == "m":
-        value = float(data["lengthValue"])*1609.344
-
-    elif data['fromLength'] == "mi" and data["to"] == "km":
-        value = float(data["lengthValue"])/0.621371
-    
+    if from_unit == "m" and to_unit == "km":
+        result = value / 1000
+    elif from_unit == "m" and to_unit == "mi":
+        result = value / 1609.344
+    elif from_unit == "km" and to_unit == "m":
+        result = value * 1000
+    elif from_unit == "km" and to_unit == "mi":
+        result = value * 0.621371
+    elif from_unit == "mi" and to_unit == "m":
+        result = value * 1609.344
+    elif from_unit == "mi" and to_unit == "km":
+        result = value / 0.621371
+    elif from_unit == to_unit:
+        result = value
     else:
-        return "Value out of bounds"
-    
-    converted_length = {
-        "final_result" : "{:.2f}".format(value),
+        return {"error": "Unsupported length conversion"}
+
+    return {
+        "final_result": "{:.2f}".format(result)
     }
-    return converted_length        
 
 
 def convert_weight(data):
-    pass
+    from_unit = data["fromWeight"]
+    to_unit = data["to"]
+    value = float(data["weightValue"])
+
+    if from_unit == "kg" and to_unit == "g":
+        result = value * 1000
+    elif from_unit == "kg" and to_unit == "lb":
+        result = value * 2.20462
+    elif from_unit == "g" and to_unit == "kg":
+        result = value / 1000
+    elif from_unit == "g" and to_unit == "lb":
+        result = value * 0.00220462
+    elif from_unit == "lb" and to_unit == "kg":
+        result = value / 2.20462
+    elif from_unit == "lb" and to_unit == "g":
+        result = value / 0.00220462
+    elif from_unit == to_unit:
+        result = value
+    else:
+        return {"error": "Unsupported weight conversion"}
+
+    return {
+        "final_result": "{:.2f}".format(result)
+    }
+
+
+def convert_temperature(data):
+    from_unit = data["fromTemp"]
+    to_unit = data["to"]
+    value = float(data["tempValue"])
+
+    if from_unit == "c" and to_unit == "f":
+        result = (value * 9/5) + 32
+    elif from_unit == "c" and to_unit == "k":
+        result = value + 273.15
+    elif from_unit == "f" and to_unit == "c":
+        result = (value - 32) * 5/9
+    elif from_unit == "f" and to_unit == "k":
+        result = (value - 32) * 5/9 + 273.15
+    elif from_unit == "k" and to_unit == "c":
+        result = value - 273.15
+    elif from_unit == "k" and to_unit == "f":
+        result = (value - 273.15) * 9/5 + 32
+    elif from_unit == to_unit:
+        result = value
+    else:
+        return {"error": "Unsupported temperature conversion"}
+
+    return {
+        "final_result": "{:.2f}".format(result)
+    }
