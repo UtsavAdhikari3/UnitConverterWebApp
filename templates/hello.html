@@ -52,7 +52,7 @@
 
     <form id="temperature" class="converter-form" action="{{url_for('read_form')}}" style="display:none" method="post">
       <h2>Temperature Converter</h2>
-      <input type="number" id="tempValue" name="tempValue" placeholder="Enter value" name="temperature" required />
+      <input type="number" id="tempValue" name="tempValue" placeholder="Enter value" required />
       <input type="hidden" name="formId" value="temperature">
       <select id="tempFrom" name="fromTemp">
         <option value="c">Celsius</option>
@@ -65,7 +65,7 @@
         <option value="k">Kelvin</option>
       </select>
       <button type="submit">Convert</button>
-      <p id="tempResult">Result: --</p>
+      <p id="temperatureResult">Result: --</p>
     </form>
   </div>
 
@@ -81,6 +81,37 @@ function showForm(type){
   });
   localStorage.setItem('selectedConverter', type);
 }
+
+document.querySelectorAll(".converter-form").forEach(form => {
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const payload = {};
+
+    for (let [key, value] of formData.entries()) {
+      payload[key] = value;
+    }
+
+    const resultId = form.id + "Result"; // e.g. "lengthResult"
+    const resultBox = document.getElementById(resultId);
+
+    const res = await fetch("/read-form", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if (data.result && data.result.final_result) {
+      resultBox.textContent = `Result: ${data.result.final_result} ${data.input.to}`;
+    } else {
+      resultBox.textContent = `Error: ${data.result?.error || 'Something went wrong'}`;
+    }
+  });
+});
+
 
   </script>
 </body>
