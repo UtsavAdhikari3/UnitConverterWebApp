@@ -11,7 +11,12 @@ def hello():
 
 @app.route("/read-form",methods = ["POST"])
 def read_form():
-    data = request.form
-    print(data)
-    return jsonify(data)
+    pass
+
+
+
+def convert_length(data):
+    print(data.fromLength)
+
+
 
